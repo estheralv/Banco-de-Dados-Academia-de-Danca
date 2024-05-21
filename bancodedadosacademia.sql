@@ -22,9 +22,9 @@ CREATE TABLE IF NOT EXISTS Logins (
     ClienteID INT,
     Username VARCHAR(50) UNIQUE,
     Senha VARCHAR(100),
-    FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID),
-    FOREIGN KEY (Username) REFERENCES Clientes(Username),
-    FOREIGN KEY (Senha) REFERENCES Clientes(Senha)
+    FOREIGN KEY (ClienteID) REFERENCES Cadastro(ClienteID),
+    FOREIGN KEY (Username) REFERENCES Cadastro(Username),
+    FOREIGN KEY (Senha) REFERENCES Cadastro(Senha)
 );
 
 CREATE TABLE IF NOT EXISTS Agendamento (
@@ -32,5 +32,5 @@ CREATE TABLE IF NOT EXISTS Agendamento (
     ClienteID INT,
     DataAgendamento DATE,
     Modalidade VARCHAR(50),
-    FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)
+    FOREIGN KEY (ClienteID) REFERENCES Cadastro(ClienteID)
 );
