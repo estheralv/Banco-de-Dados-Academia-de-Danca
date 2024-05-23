@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+  <html lang="pt-br">
+
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>      
+      <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@200&display=swap" rel="stylesheet">
+      <link rel="stylesheet" src="assets/icons/iconAcademiaDeDanca.jpeg">
+      <link rel="stylesheet" href="assets/css/style.css">
+      <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+      <link rel="shortcut icon" href="assets/icons/iconAcademiaDeDanca.jpeg">
+      <title>MF | Academia de dança</title>
+    </head>
+
+  <body>
+    <!-- comeco do header --->
+    <header>
+       <!--fim da div caixa--->
+      
+
+          <div class="logo">
+          <a href="index.html"><img src="assets/icons/iconAcademiaDeDanca.jpeg" width="70" height="70"></a>
+          </div>
+          
+          <div class = "caixa">
+        <!--barra de navegacao--->
+      <nav class="navegacao">
+              <a href = "sobrenos.html">Sobre-nós</a>
+              <a href = "modalidades.html">Modalidades</a>
+              <a href = "planosprecos.html">Planos e preços</a>
+              <a href = "centraldeajuda.html">Central de ajuda</a>
+      </nav>
+       <!--fim da barra de navegacao--->
+    </div>
+          <!--fim da div caixa--->
+    </header>
+       <!-- fim do header --->
+
+      <main>
+        <div class="imagemcontainer">
+        <img class="imagem" src="assets/images/Alunasdancandooriginal.svg" alt="Alunas da academia de dança"  height="590" class="imagemPrincipal" >
+        </div>
+
+        
+        <div class="container">
+          <h2 class="textoimg" id="saudacao"></h2>
+
+          <!---SCRIPT AONDE QUANDO É DE MANHÃ DA BOM DIA, SE É TARDE BOA TARDE E SE É NOITE BOA NOITE-->
+          <script>
+            function atualizarSaudacao() {
+                var saudacaoElement = document.getElementById('saudacao');
+                var agora = new Date();
+                var horas = agora.getHours();
+    
+                if (horas >= 0 && horas < 12) {
+                    saudacaoElement.textContent = 'Bom dia!';
+                } else if (horas >= 12 && horas < 18) {
+                    saudacaoElement.textContent = 'Boa tarde!';
+                } else {
+                    saudacaoElement.textContent = 'Boa noite!';
+                }
+            }
+    
+            // Chame a função quando a página carregar
+            atualizarSaudacao();
+        </script>
+          <!---FIM DO SCRIPT LEGAL-->
+          <h1 class="texto-agendamento">Agendamento</h1>
+          <p>Data: <span id="data"></span></p>
+          <label for="horario">Escolha o horário:</label>
+          <select id="horario" class="horario">
+              <!-- Aqui os horários serão gerados dinamicamente pelo JavaScript -->
+          </select><br>
+          <label for="modalidade">Escolha a modalidade:</label>
+          <select id="modalidade" class="modalidade">
+              <option value="jump">Jump</option>
+              <option value="ritmos">Ritmos</option>
+              <option value="funcional">Funcional</option>
+              <option value="step">Step</option>
+          </select><br>
+          <button class="agendabtn" onclick="agendar()">Agendar</button>
+      </div>
+  
+      <script>
+          document.addEventListener('DOMContentLoaded', function () {
+              var dataElement = document.getElementById('data');
+              var horarioSelect = document.getElementById('horario');
+  
+              // Preenche a data atual
+              var dataAtual = new Date();
+              var dia = dataAtual.getDate();
+              var mes = dataAtual.getMonth() + 1;
+              var ano = dataAtual.getFullYear();
+              dataElement.textContent = dia + '/' + mes + '/' + ano;
+  
+              // Preenche os horários disponíveis
+              var horaAtual = dataAtual.getHours();
+              var minutosAtual = dataAtual.getMinutes();
+              var horarioInicio = Math.ceil(horaAtual + minutosAtual / 60); // Arredonda para cima
+              if (horarioInicio >= 20) {
+                  alert('Não há horários disponíveis para hoje.');
+                  return;
+              }
+              for (var i = horarioInicio; i < 20; i++) {
+                  for (var j = 0; j < 60; j += 30) {
+                      var horario = (i < 10 ? '0' + i : i) + ':' + (j === 0 ? '00' : j);
+                      var option = document.createElement('option');
+                      option.text = horario;
+                      option.value = horario;
+                      horarioSelect.add(option);
+                  }
+              }
+          });
+  
+          function agendar() {
+              var horarioSelecionado = document.getElementById('horario').value;
+              var modalidadeSelecionada = document.getElementById('modalidade').value;
+  
+              var horaAtual = new Date().getHours();
+              var minutosAtual = new Date().getMinutes();
+              var horarioAtual = horaAtual + minutosAtual / 60;
+  
+              var horarioAgendado = parseFloat(horarioSelecionado.split(':')[0]);
+              if (horarioAgendado < horarioAtual || horarioAgendado >= 20) {
+                  alert('Horário inválido para agendamento.');
+                  return;
+              }
+  
+              alert('Horário ' + horarioSelecionado + ' agendado para a modalidade ' + modalidadeSelecionada + '.');
+          }
+      </script>
+
+      <script class="login&senhaVERIFICACAO">
+
+        //login e senha de professor pré definidos 
+        const professor_PreDefinicao = [
+          { username: 'profPrincipal', password: 'prof123' },
+          { username: 'profSecundario', password: 'prof789' }
+        ];
+
+        //função de verificação de login
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            //puxa informaçoes de usuario e senha
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            //verificando se é professor
+            const isProf = professor_PreDefinicao.some(prof => prof.username === username && prof.password === password);
+
+            if (isProf) {
+                alert('Bem-vindo, Professor(a)!');
+                //redireciona para perfil do professor
+                window.location.href = 'perfil_professor.html';
+            } else {
+              //envia os dados pro backend para verificação de aluno
+              const response = await fetch('/login', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ username, password })
+              });
+
+              const result = await response.json();
+
+              if (result.success) {
+                  alert('Bem-vindo, Aluno(a)!');
+                  window.location.href = 'perfil_aluno.html';
+              } else {
+                  alert('Usuário ou senha incorretos!');
+              }
+            }
+          }
+
+          document.getElementById('formulario_login').addEventListener('submit', handleLogin);
+
+      </script>
+
+        </div>
+
+            
+      <div class="wrapper">
+        <form  class="formulario_login" action="">
+          <h1 class="bem-vindo">Bem vindo(a)</h1>
+          <div class="input-box">
+          <input type="text" placeholder="Usuário" required>
+          <i class='bx bxs-user'></i>
+        </div>
+
+        <div class="input-box">
+          <input type="text" placeholder="Senha" required>
+          <i class='bx bx-lock-alt'></i>
+        </div>
+
+        <div class="lembre-me">
+          <label>
+            <input type="checkbox">Lembre-me
+          </label>
+
+          <a href="#">Esqueci minha senha</a>
+        </div>
+
+          <button type="submit" class="btn">Login</button>
+
+        <div class="link-registro">
+          <p>Não tem conta?
+            <a href="cadastro.html">Cadastre-se</a>
+          </p>
+
+          
+        </div>
+        
+      </form>
+      <!---termina o formulario-->
+      
+
+      
+
+    </div>
+    </main>
+    
+   <!---PARTE DO RODAPÉ RESPONSIVO-->>
+   <footer class="rodape" id="contato">
+    <div class="rodape-div">
+
+        <div class="rodape-div-1">
+            <div class="rodape-div-1-coluna">
+                <!-- elemento -->
+                <div class="logo">
+                    <a href="index.html"><img src="assets/icons/iconAcademiaDeDanca.jpeg" width="70" height="70"></a>
+                    </div>
+                <p>SIA Trecho 5 lote 000 bloco z sala 900 - Guará, Brasília - DF, 70000-010</p>
+            </div>
+        </div>
+
+        <div class="rodape-div-2">
+            <div class="rodape-div-2-coluna">
+                <!-- elemento -->
+                <span class="contato"><b>Contatos</b></span>
+                <p>contato@na.na</p>
+                <p>+55 63 99200-0000</p>
+
+                  <a href="https://www.instagram.com/mf.dancefit/" target=”_blank”>
+                      <h3>Nos sigam em nossas redes sociais!
+                      <i class='bx bxl-instagram-alt' ></i></h3>
+                  </a>
+              
+            </div>
+        </div>
+
+        <div class="rodape-div-3">
+            <div class="rodape-div-3-coluna">
+                <!-- elemento -->
+                <span><b>Links</b></span>
+                <p><a href="#servicos">Serviços</a></p>
+                <p><a href="#empresa">Empresa</a></p>
+                <p><a href="#sobre">Sobre</a></p>
+            </div>
+        </div>
+
+        <div class="rodape-div-4">
+            <div class="rodape-div-4-coluna">
+                <!-- elemento -->
+                <span><b>Outros</b></span>
+                <p>Políticas de Privacidade</p>
+            </div>
+        </div>
+
+    </div>
+    <p class="rodape-direitos">Copyright © 2023 – Todos os Direitos Reservados.</p>
+</footer>
+
+    </body>
+
+</html>
